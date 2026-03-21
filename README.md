@@ -1,1 +1,1 @@
-# Analytical-Informational-Accounting-System
+# Accounting-System

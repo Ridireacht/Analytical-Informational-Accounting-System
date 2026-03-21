@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Прогнозирование потребностей по препарату</title>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <span th:text="'Здравствуйте, ' + ${username} + '!'"></span>
+  </div>
+  <div class="nav-right">
+    <a href="/logout">
+      <button>Выйти</button>
+    </a>
+  </div>
+</nav>
+
+<h1 style="text-align: center;">Прогнозирование потребностей по препарату</h1>
+
+<div class="add-form-form" id="form">
+  <div class="left-section">
+    <label for="product-id">Выберите препарат, для которого нужно произвести прогнозирование:</label><br>
+    <select id="product-id">
+      <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+    </select><br><br>
+  </div>
+  <div class="right-section">
+    <label for="weeks-number">За последние N недель:</label><br>
+    <input type="number" id="weeks-number" name="weeks-number" min="1" max="100" step="1" value="10"><br><br>
+  </div>
+</div>
+
+<div style="margin-top: 60px;"></div>
+
+<div class="add-form">
+  <p>Прогноз расхода препарата на следующую неделю: <span id="nextWeekOutflowPrediction"></span> штук</p>
+  <p>Прогноз расхода препарата на следующий месяц: <span id="nextMonthOutflowPrediction"></span> штук</p>
+  <br><br><br>
+  <div id="chart-container">
+    <canvas id="outflow-chart"></canvas>
+  </div>
+</div>
+
+<div class="button-container">
+  <a href="/home" class="home-button">Домой</a>
+  <button id="download-pdf" class="download-button">Скачать отчёт</button>
+</div>
+
+<script>
+  var myChart;
+
+  function getPredictionData() {
+    var productId = document.getElementById("product-id").value;
+    var weeksNumber = document.getElementById("weeks-number").value;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                document.getElementById('nextWeekOutflowPrediction').textContent = response.nextWeekOutflowPrediction.toFixed(2);
+                document.getElementById('nextMonthOutflowPrediction').textContent = response.nextMonthOutflowPrediction.toFixed(2);
+
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                var ctx = document.getElementById('outflow-chart').getContext('2d');
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: response.labels,
+                        datasets: [{
+                            label: 'Расход препарата',
+                            data: response.outflowValues,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            pointRadius: 3,  // начальный размер точек
+                            pointHoverRadius: 5  // начальный размер точек при наведении
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'График с каждым случаем расхода препарата за последние ' + weeksNumber + ' недель',
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+                myChart.update();
+            } else {
+                console.error('Ошибка при выполнении запроса:', xhr.status);
+            }
+        }
+    };
+    xhr.open('GET', '/prediction-product/' + productId + '-' + weeksNumber);
+    xhr.send();
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    getPredictionData();
+  });
+
+
+  document.getElementById('product-id').addEventListener('change', function() {
+    getPredictionData();
+  });
+
+  document.getElementById('weeks-number').addEventListener('change', function() {
+    getPredictionData();
+  });
+
+  function updateChartPoints(showPoints) {
+      if (myChart && myChart.data.datasets) {
+          myChart.data.datasets.forEach(dataset => {
+              dataset.pointRadius = showPoints ? 3 : 0;  // размер точек (0 - точки не отображаются)
+              dataset.pointHoverRadius = showPoints ? 5 : 0; // размер точек при наведении (0 - точки не отображаются)
+          });
+          myChart.update();
+      }
+  }
+
+  document.getElementById('download-pdf').addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const content = document.getElementById('chart-container');
+    const canvas = document.getElementById('outflow-chart');
+    const nav = document.querySelector('nav');
+    const h1 = document.querySelector('h1');
+    const homeButton = document.querySelector('.home-button');
+    const downloadButton = document.getElementById('download-pdf');
+    const form = document.getElementById('form');
+    const selectedProductId = document.getElementById('product-id').value;
+
+    // Скрываем точки на линиях графика
+    updateChartPoints(false);
+
+    // Скрываем лишнее
+    nav.style.display = 'none';
+    homeButton.style.display = 'none';
+    downloadButton.style.display = 'none';
+    form.style.display = 'none';
+
+    // Получаем название выбранного препарата
+    const selectedProduct = document.querySelector('#product-id option:checked').textContent;
+
+    // Заменяем подпись отчёта
+    h1.innerHTML = `Отчётность по прогнозированию потребностей в препарате "${selectedProduct}"`;
+
+    // Увеличиваем график на всю страницу
+    const originalWidth = canvas.style.width;
+    const originalHeight = canvas.style.height;
+    content.style.width = '100%';
+    content.style.height = '100vh';
+    canvas.style.width = '100%';
+    canvas.style.height = '100vh';
+    myChart.resize();
+
+    // Отключаем стили background-color и border
+    const addFormElements = document.querySelectorAll('.add-form');
+    const originalStyles = [];
+    addFormElements.forEach(element => {
+        originalStyles.push({
+            backgroundColor: element.style.backgroundColor,
+            border: element.style.border
+        });
+        element.style.backgroundColor = 'none';
+        element.style.border = 'none';
+    });
+
+    // Добавляем задержку перед захватом содержимого страницы
+    setTimeout(() => {
+      html2canvas(document.body).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save('report.pdf');
+
+          // Возвращаем оригинальную подпись
+          h1.innerHTML = `Прогнозирование потребностей по препарату`;
+
+          // Возвращаем точки на линиях графика
+          updateChartPoints(true);
+
+          // Возвращаем скрытые элементы
+          nav.style.display = '';
+          homeButton.style.display = '';
+          downloadButton.style.display = '';
+          form.style.display = '';
+
+          // Возвращаем исходные размеры графика
+          content.style.width = '';
+          content.style.height = '';
+          canvas.style.width = originalWidth;
+          canvas.style.height = originalHeight;
+          myChart.resize();
+
+          // Восстанавливаем стили background-color и border
+          addFormElements.forEach((element, index) => {
+              element.style.backgroundColor = originalStyles[index].backgroundColor;
+              element.style.border = originalStyles[index].border;
+          });
+      });
+    }, 1000); // задержка в 1000 мс
+  });
+</script>
+</body>
+</html>
