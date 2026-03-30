@@ -1,16 +1,18 @@
 package com.vasiliy.project.config;
 
+import com.vasiliy.project.entity.Role;
+import com.vasiliy.project.entity.User;
 import com.vasiliy.project.entity.info.AccountingType;
 import com.vasiliy.project.entity.info.Category;
 import com.vasiliy.project.entity.info.Form;
-import com.vasiliy.project.repository.AccountingTypeRepository;
-import com.vasiliy.project.repository.CategoryRepository;
-import com.vasiliy.project.repository.FormRepository;
+import com.vasiliy.project.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -20,6 +22,9 @@ public class DataInitializer implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final FormRepository formRepository;
     private final AccountingTypeRepository accountingTypeRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -438,6 +443,38 @@ public class DataInitializer implements CommandLineRunner {
             accountingTypes.add(new AccountingType("Группа 4 (иные)"));
 
             accountingTypeRepository.saveAll(accountingTypes);
+        }
+
+
+        if (roleRepository.findAll().isEmpty()) {
+            List<Role> roles = new ArrayList<>();
+
+            Role roleAdministrator = new Role();
+            roleAdministrator.setName("Администратор");
+
+            Role roleUser = new Role();
+            roleUser.setName("Пользователь");
+
+            roles.add(roleAdministrator);
+            roles.add(roleUser);
+
+            roleRepository.saveAll(roles);
+        }
+
+
+        if (userRepository.findAll().isEmpty()) {
+
+            List<User> users = new ArrayList<>();
+
+            User administrator = new User();
+            administrator.setName("Имя Фамилия");
+            administrator.setEmail("administrator@gmail.com");
+            administrator.setPassword(passwordEncoder.encode("password"));
+            administrator.setRoles(Collections.singletonList(roleRepository.findByName("Администратор")));
+
+            users.add(administrator);
+
+            userRepository.saveAll(users);
         }
     }
 }
