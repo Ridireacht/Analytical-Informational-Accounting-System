@@ -2,9 +2,7 @@ package com.vasiliy.project.config;
 
 import com.vasiliy.project.entity.Role;
 import com.vasiliy.project.entity.User;
-import com.vasiliy.project.entity.info.AccountingType;
-import com.vasiliy.project.entity.info.Category;
-import com.vasiliy.project.entity.info.Form;
+import com.vasiliy.project.entity.info.*;
 import com.vasiliy.project.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +22,8 @@ public class DataInitializer implements CommandLineRunner {
     private final AccountingTypeRepository accountingTypeRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final SupplierRepository supplierRepository;
+    private final ProductRepository productRepository;
     private PasswordEncoder passwordEncoder;
 
 
@@ -475,6 +475,142 @@ public class DataInitializer implements CommandLineRunner {
             users.add(administrator);
 
             userRepository.saveAll(users);
+        }
+
+
+        if (supplierRepository.findAll().isEmpty()) {
+
+            List<Supplier> suppliers = new ArrayList<>();
+
+            Supplier supplier1 = new Supplier();
+            supplier1.setName("МедФарм");
+            supplier1.setAddress("Тула, ул. Арсенальная, д. 33");
+            supplier1.setPhoneNumber("+76372619485");
+
+            Supplier supplier2 = new Supplier();
+            supplier2.setName("Лекарственная Линия");
+            supplier2.setAddress("Орёл, ул. Ленина, д. 5");
+            supplier2.setPhoneNumber("+75425670993");
+
+            Supplier supplier3 = new Supplier();
+            supplier3.setName("Фарм Дистрибьюшн");
+            supplier3.setAddress("Москва, ул. Амурская, д. 17");
+            supplier3.setPhoneNumber("+77774684202");
+
+            suppliers.add(supplier1);
+            suppliers.add(supplier2);
+            suppliers.add(supplier3);
+
+            supplierRepository.saveAll(suppliers);
+        }
+
+
+        if (productRepository.findAll().isEmpty()) {
+
+            List<Product> products = new ArrayList<>();
+
+            Product product1 = new Product();
+            product1.setName("Велкардио");
+            product1.setCategory(categoryRepository.findByName("Альфа- и бета-адреноблокаторы"));
+            product1.setForm(formRepository.findByName("Таблетка"));
+            product1.setExpirationDays(120L);
+            product1.setIsVital(true);
+            product1.setIsPrescriptive(true);
+            product1.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product2 = new Product();
+            product2.setName("Глицин Канон");
+            product2.setCategory(categoryRepository.findByName("Седативные средства"));
+            product2.setForm(formRepository.findByName("Таблетка"));
+            product2.setExpirationDays(730L);
+            product2.setIsVital(true);
+            product2.setIsPrescriptive(false);
+            product2.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product3 = new Product();
+            product3.setName("Валериана Форте");
+            product3.setCategory(categoryRepository.findByName("Седативные средства"));
+            product3.setForm(formRepository.findByName("Таблетка"));
+            product3.setExpirationDays(730L);
+            product3.setIsVital(false);
+            product3.setIsPrescriptive(false);
+            product3.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product4 = new Product();
+            product4.setName("Полисорб МП");
+            product4.setCategory(categoryRepository.findByName("Адсорбенты"));
+            product4.setForm(formRepository.findByName("Суспензия"));
+            product4.setExpirationDays(1825L);
+            product4.setIsVital(false);
+            product4.setIsPrescriptive(false);
+            product4.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product5 = new Product();
+            product5.setName("Оксациллин");
+            product5.setCategory(categoryRepository.findByName("Пенициллины"));
+            product5.setForm(formRepository.findByName("Раствор"));
+            product5.setExpirationDays(730L);
+            product5.setIsVital(true);
+            product5.setIsPrescriptive(true);
+            product5.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product6 = new Product();
+            product6.setName("Иммуновенин");
+            product6.setCategory(categoryRepository.findByName("Иммуноглобулины"));
+            product6.setForm(formRepository.findByName("Раствор"));
+            product6.setExpirationDays(730L);
+            product6.setIsVital(true);
+            product6.setIsPrescriptive(true);
+            product6.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product7 = new Product();
+            product7.setName("Моноинсулин ЧР");
+            product7.setCategory(categoryRepository.findByName("Инсулины"));
+            product7.setForm(formRepository.findByName("Раствор"));
+            product7.setExpirationDays(912L);
+            product7.setIsVital(true);
+            product7.setIsPrescriptive(true);
+            product7.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product8 = new Product();
+            product8.setName("Клофелин");
+            product8.setCategory(categoryRepository.findByName("Альфа-адреномиметики"));
+            product8.setForm(formRepository.findByName("Капли"));
+            product8.setExpirationDays(730L);
+            product8.setIsVital(false);
+            product8.setIsPrescriptive(true);
+            product8.setAccountingType(accountingTypeRepository.findByName("Группа 2 (сильнодействующие и ядовитые в-ва)"));
+
+            Product product9 = new Product();
+            product9.setName("Бускопан");
+            product9.setCategory(categoryRepository.findByName("м-Холинолитики"));
+            product9.setForm(formRepository.findByName("Таблетка"));
+            product9.setExpirationDays(1095L);
+            product9.setIsVital(false);
+            product9.setIsPrescriptive(false);
+            product9.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            Product product10 = new Product();
+            product10.setName("Трентал");
+            product10.setCategory(categoryRepository.findByName("Антиагреганты"));
+            product10.setForm(formRepository.findByName("Таблетка"));
+            product10.setExpirationDays(1460L);
+            product10.setIsVital(false);
+            product10.setIsPrescriptive(false);
+            product10.setAccountingType(accountingTypeRepository.findByName("Нет"));
+
+            products.add(product1);
+            products.add(product2);
+            products.add(product3);
+            products.add(product4);
+            products.add(product5);
+            products.add(product6);
+            products.add(product7);
+            products.add(product8);
+            products.add(product9);
+            products.add(product10);
+
+            productRepository.saveAll(products);
         }
     }
 }

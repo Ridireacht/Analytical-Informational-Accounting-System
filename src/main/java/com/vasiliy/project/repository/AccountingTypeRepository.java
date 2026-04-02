@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountingTypeRepository extends JpaRepository<AccountingType, Long> {
 
+    AccountingType findByName(String name);
 }
