@@ -20,13 +20,33 @@ public class PageController {
   private final SupplierService supplierService;
   private final ProductService productService;
   private final StorageProductService storageProductService;
+  private final UserService userService;
   private final AuthService authService;
 
+
+  @GetMapping("/login")
+  public String login(){
+    return "login";
+  }
 
   @GetMapping("/home")
   public String getHome(Model model) {
     model.addAttribute("username", authService.getCurrentUserUsername());
-    return "home";
+
+    if (authService.getCurrentUserRoleName().equals("Администратор")) {
+      return "home_admin";
+    }
+
+    else {
+      return "home_user";
+    }
+  }
+
+  @GetMapping("/users")
+  public String getUsers(Model model) {
+    model.addAttribute("username", authService.getCurrentUserUsername());
+    model.addAttribute("users", userService.getAllUsers());
+    return "users";
   }
 
   @GetMapping("/categories")

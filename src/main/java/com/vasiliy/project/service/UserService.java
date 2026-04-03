@@ -1,6 +1,7 @@
 package com.vasiliy.project.service;
 
 import com.vasiliy.project.dto.UserDto;
+import com.vasiliy.project.dto.info.UpdateRequest;
 import com.vasiliy.project.entity.User;
 
 import java.util.List;
@@ -10,5 +11,9 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-    List<UserDto> findAllUsers();
+    List<UserDto> getAllUsers();
+
+    Boolean updateUser(Long userId, UpdateRequest updateRequest);
+
+    Boolean deleteUser(Long userId);
 }

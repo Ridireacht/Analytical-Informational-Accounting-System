@@ -22,4 +22,12 @@ public class AuthServiceImpl implements AuthService {
 
         return user.getName();
     }
+
+    @Override
+    public String getCurrentUserRoleName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName());
+
+        return user.getRoles().get(0).getName();
+    }
 }
