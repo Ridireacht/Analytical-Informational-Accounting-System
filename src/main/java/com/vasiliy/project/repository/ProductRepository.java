@@ -13,6 +13,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   boolean existsById(Long productId);
 
+  Product findByName(String name);
+
 
   @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
   List<Product> findProductsByCategoryId(@Param("categoryId") Long categoryId);
