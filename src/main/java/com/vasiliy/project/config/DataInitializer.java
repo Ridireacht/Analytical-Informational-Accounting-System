@@ -632,19 +632,19 @@ public class DataInitializer implements CommandLineRunner {
             storageProduct1.setProduct(productRepository.findByName("Велкардио"));
             storageProduct1.setSupplier(supplierRepository.findByName("МедФарм"));
             storageProduct1.setQuantity(100L);
-            storageProduct1.setExpiresAt(LocalDateTime.of(2025, Month.APRIL, 27, 19, 34));
+            storageProduct1.setExpiresAt(LocalDateTime.of(2026, Month.APRIL, 27, 19, 34));
 
             StorageProduct storageProduct2 = new StorageProduct();
             storageProduct2.setProduct(productRepository.findByName("Глицин Канон"));
             storageProduct2.setSupplier(supplierRepository.findByName("Лекарственная Линия"));
             storageProduct2.setQuantity(143L);
-            storageProduct2.setExpiresAt(LocalDateTime.of(2025, Month.OCTOBER, 28, 19, 35));
+            storageProduct2.setExpiresAt(LocalDateTime.of(2026, Month.OCTOBER, 28, 19, 35));
 
             StorageProduct storageProduct3 = new StorageProduct();
             storageProduct3.setProduct(productRepository.findByName("Валериана Форте"));
             storageProduct3.setSupplier(supplierRepository.findByName("Фарм Дистрибьюшн"));
             storageProduct3.setQuantity(78L);
-            storageProduct3.setExpiresAt(LocalDateTime.of(2025, Month.NOVEMBER, 9, 19, 37));
+            storageProduct3.setExpiresAt(LocalDateTime.of(2026, Month.NOVEMBER, 9, 19, 37));
 
             storageProducts.add(storageProduct1);
             storageProducts.add(storageProduct2);
@@ -662,19 +662,19 @@ public class DataInitializer implements CommandLineRunner {
             inflowRecord1.setStorageProduct(storageProductRepository.findById(1L).get());
             inflowRecord1.setQuantity(100L);
             inflowRecord1.setPriceBought(200.0);
-            inflowRecord1.setWrittenAt(LocalDateTime.of(2025, Month.MARCH, 29, 19, 34));
+            inflowRecord1.setWrittenAt(LocalDateTime.of(2026, Month.MARCH, 29, 19, 34));
 
             InflowRecord inflowRecord2 = new InflowRecord();
             inflowRecord2.setStorageProduct(storageProductRepository.findById(2L).get());
             inflowRecord2.setQuantity(143L);
             inflowRecord2.setPriceBought(232.0);
-            inflowRecord2.setWrittenAt(LocalDateTime.of(2025, Month.MARCH, 29, 19, 36));
+            inflowRecord2.setWrittenAt(LocalDateTime.of(2026, Month.MARCH, 29, 19, 36));
 
             InflowRecord inflowRecord3 = new InflowRecord();
             inflowRecord3.setStorageProduct(storageProductRepository.findById(3L).get());
             inflowRecord3.setQuantity(78L);
             inflowRecord3.setPriceBought(100.0);
-            inflowRecord3.setWrittenAt(LocalDateTime.of(2025, Month.MARCH, 29, 19, 37));
+            inflowRecord3.setWrittenAt(LocalDateTime.of(2026, Month.MARCH, 29, 19, 37));
 
             inflowRecords.add(inflowRecord1);
             inflowRecords.add(inflowRecord2);
@@ -692,43 +692,43 @@ public class DataInitializer implements CommandLineRunner {
             soldRecord1.setStorageProduct(storageProductRepository.findById(2L).get());
             soldRecord1.setQuantity(24L);
             soldRecord1.setPriceSold(150.0);
-            soldRecord1.setSoldAt(LocalDateTime.of(2025, Month.JANUARY, 29, 19, 43));
+            soldRecord1.setSoldAt(LocalDateTime.of(2026, Month.JANUARY, 29, 19, 43));
 
             SoldRecord soldRecord2 = new SoldRecord();
             soldRecord2.setStorageProduct(storageProductRepository.findById(2L).get());
             soldRecord2.setQuantity(10L);
             soldRecord2.setPriceSold(160.0);
-            soldRecord2.setSoldAt(LocalDateTime.of(2025, Month.MARCH, 27, 19, 44));
+            soldRecord2.setSoldAt(LocalDateTime.of(2026, Month.MARCH, 27, 19, 44));
 
             SoldRecord soldRecord3 = new SoldRecord();
             soldRecord3.setStorageProduct(storageProductRepository.findById(2L).get());
             soldRecord3.setQuantity(2L);
             soldRecord3.setPriceSold(164.0);
-            soldRecord3.setSoldAt(LocalDateTime.of(2025, Month.FEBRUARY, 15, 19, 44));
+            soldRecord3.setSoldAt(LocalDateTime.of(2026, Month.FEBRUARY, 15, 19, 44));
 
             SoldRecord soldRecord4 = new SoldRecord();
             soldRecord4.setStorageProduct(storageProductRepository.findById(2L).get());
             soldRecord4.setQuantity(7L);
             soldRecord4.setPriceSold(171.0);
-            soldRecord4.setSoldAt(LocalDateTime.of(2025, Month.MARCH, 17, 19, 44));
+            soldRecord4.setSoldAt(LocalDateTime.of(2026, Month.MARCH, 17, 19, 44));
 
             SoldRecord soldRecord5 = new SoldRecord();
             soldRecord5.setStorageProduct(storageProductRepository.findById(2L).get());
             soldRecord5.setQuantity(5L);
             soldRecord5.setPriceSold(132.0);
-            soldRecord5.setSoldAt(LocalDateTime.of(2025, Month.MARCH, 14, 19, 44));
+            soldRecord5.setSoldAt(LocalDateTime.of(2026, Month.MARCH, 14, 19, 44));
 
             SoldRecord soldRecord6 = new SoldRecord();
             soldRecord6.setStorageProduct(storageProductRepository.findById(3L).get());
             soldRecord6.setQuantity(4L);
             soldRecord6.setPriceSold(250.0);
-            soldRecord6.setSoldAt(LocalDateTime.of(2025, Month.FEBRUARY, 5, 19, 50));
+            soldRecord6.setSoldAt(LocalDateTime.of(2026, Month.FEBRUARY, 5, 19, 50));
 
             SoldRecord soldRecord7 = new SoldRecord();
             soldRecord7.setStorageProduct(storageProductRepository.findById(3L).get());
             soldRecord7.setQuantity(8L);
             soldRecord7.setPriceSold(260.0);
-            soldRecord7.setSoldAt(LocalDateTime.of(2025, Month.JANUARY, 24, 19, 50));
+            soldRecord7.setSoldAt(LocalDateTime.of(2026, Month.JANUARY, 24, 19, 50));
 
             soldRecords.add(soldRecord1);
             soldRecords.add(soldRecord2);
@@ -749,22 +749,22 @@ public class DataInitializer implements CommandLineRunner {
             WrittenOffRecord writtenOffRecord1 = new WrittenOffRecord();
             writtenOffRecord1.setStorageProduct(storageProductRepository.findById(2L).get());
             writtenOffRecord1.setQuantity(5L);
-            writtenOffRecord1.setWrittenOffAt(LocalDateTime.of(2025, Month.MARCH, 29, 19, 44));
+            writtenOffRecord1.setWrittenOffAt(LocalDateTime.of(2026, Month.MARCH, 29, 19, 44));
 
             WrittenOffRecord writtenOffRecord2 = new WrittenOffRecord();
             writtenOffRecord2.setStorageProduct(storageProductRepository.findById(2L).get());
             writtenOffRecord2.setQuantity(37L);
-            writtenOffRecord2.setWrittenOffAt(LocalDateTime.of(2025, Month.MARCH, 27, 19, 44));
+            writtenOffRecord2.setWrittenOffAt(LocalDateTime.of(2026, Month.MARCH, 27, 19, 44));
 
             WrittenOffRecord writtenOffRecord3 = new WrittenOffRecord();
             writtenOffRecord3.setStorageProduct(storageProductRepository.findById(3L).get());
             writtenOffRecord3.setQuantity(13L);
-            writtenOffRecord3.setWrittenOffAt(LocalDateTime.of(2025, Month.MARCH, 28, 19, 50));
+            writtenOffRecord3.setWrittenOffAt(LocalDateTime.of(2026, Month.MARCH, 28, 19, 50));
 
             WrittenOffRecord writtenOffRecord4 = new WrittenOffRecord();
             writtenOffRecord4.setStorageProduct(storageProductRepository.findById(3L).get());
             writtenOffRecord4.setQuantity(5L);
-            writtenOffRecord4.setWrittenOffAt(LocalDateTime.of(2025, Month.FEBRUARY, 2, 19, 50));
+            writtenOffRecord4.setWrittenOffAt(LocalDateTime.of(2026, Month.FEBRUARY, 2, 19, 50));
 
             writtenOffRecords.add(writtenOffRecord1);
             writtenOffRecords.add(writtenOffRecord2);
