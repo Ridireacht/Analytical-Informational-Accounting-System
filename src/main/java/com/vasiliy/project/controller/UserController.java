@@ -1,7 +1,6 @@
 package com.vasiliy.project.controller;
 
 import com.vasiliy.project.dto.UserDto;
-import com.vasiliy.project.dto.info.SupplierDTO;
 import com.vasiliy.project.dto.info.UpdateRequest;
 import com.vasiliy.project.entity.User;
 import com.vasiliy.project.exception.CustomBadRequestException;
@@ -11,8 +10,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
