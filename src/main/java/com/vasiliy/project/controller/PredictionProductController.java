@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/prediction-product")
+@RequestMapping("/analytics-product")
 public class PredictionProductController {
 
   private final PredictionProductService predictionProductService;

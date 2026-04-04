@@ -115,15 +115,15 @@ public class PageController {
     return "written-off";
   }
 
-  @GetMapping("/prediction-product")
-  public String getPredictionProduct(Model model) {
+  @GetMapping("/analytics-product")
+  public String getAnalyticsProduct(Model model) {
     model.addAttribute("username", authService.getCurrentUserUsername());
     model.addAttribute("products", productService.getAllProducts());
-    return "prediction-product";
+    return "analytics-product";
   }
 
-  @GetMapping("/prediction-category")
-  public String getPredictionGroup(Model model) {
+  @GetMapping("/analytics-category")
+  public String getAnalyticsGroup(Model model) {
 
     List<Category> categories = categoryService.getAllCategories();
 
@@ -133,6 +133,6 @@ public class PageController {
 
     model.addAttribute("username", authService.getCurrentUserUsername());
     model.addAttribute("categories", categories);
-    return "prediction-category";
+    return "analytics-category";
   }
 }

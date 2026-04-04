@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Прогнозирование потребностей по препарату</title>
+  <title>Аналитика потребностей по препарату</title>
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
@@ -20,11 +20,11 @@
   </div>
 </nav>
 
-<h1 style="text-align: center;">Прогнозирование потребностей по препарату</h1>
+<h1 style="text-align: center;">Аналитика потребностей по препарату</h1>
 
 <div class="add-form-form" id="form">
   <div class="left-section">
-    <label for="product-id">Выберите препарат, для которого нужно произвести прогнозирование:</label><br>
+    <label for="product-id">Выберите препарат, для которого нужно произвести аналитику:</label><br>
     <select id="product-id">
       <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
     </select><br><br>
@@ -105,7 +105,7 @@
             }
         }
     };
-    xhr.open('GET', '/prediction-product/' + productId + '-' + weeksNumber);
+    xhr.open('GET', '/analytics-product/' + productId + '-' + weeksNumber);
     xhr.send();
   }
 
@@ -157,7 +157,7 @@
     const selectedProduct = document.querySelector('#product-id option:checked').textContent;
 
     // Заменяем подпись отчёта
-    h1.innerHTML = `Отчётность по прогнозированию потребностей в препарате "${selectedProduct}"`;
+    h1.innerHTML = `Отчётность по аналитике потребностей в препарате "${selectedProduct}"`;
 
     // Увеличиваем график на всю страницу
     const originalWidth = canvas.style.width;
@@ -193,7 +193,7 @@
           pdf.save('report.pdf');
 
           // Возвращаем оригинальную подпись
-          h1.innerHTML = `Прогнозирование потребностей по препарату`;
+          h1.innerHTML = `Аналитика потребностей по препарату`;
 
           // Возвращаем точки на линиях графика
           updateChartPoints(true);

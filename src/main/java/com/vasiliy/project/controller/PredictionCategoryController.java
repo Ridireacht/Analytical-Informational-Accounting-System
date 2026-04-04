@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/prediction-category")
+@RequestMapping("/analytics-category")
 public class PredictionCategoryController {
 
   private final PredictionCategoryService predictionCategoryService;

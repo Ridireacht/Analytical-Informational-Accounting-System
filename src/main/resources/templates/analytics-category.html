@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Прогнозирование потребностей по фармакологической группе</title>
+  <title>Аналитика потребностей по фармакологической группе</title>
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
@@ -20,11 +20,11 @@
   </div>
 </nav>
 
-<h1 style="text-align: center;">Прогнозирование потребностей по фармакологической группе</h1>
+<h1 style="text-align: center;">Аналитика потребностей по фармакологической группе</h1>
 
 <div class="add-form-form" id="form">
   <div class="left-section">
-    <label for="category-id">Выберите фармакологическую группу, для которого нужно произвести прогнозирование:</label><br>
+    <label for="category-id">Выберите фармакологическую группу, для которого нужно произвести аналитику:</label><br>
     <select id="category-id">
       <option th:each="category : ${categories}" th:value="${category.id}" th:utext="${category.name}"></option>
     </select><br><br>
@@ -132,7 +132,7 @@
               }
           }
       };
-      xhr.open('GET', '/prediction-category/' + productId + '-' + weeksNumber);
+      xhr.open('GET', '/analytics-category/' + productId + '-' + weeksNumber);
       xhr.send();
   }
 
@@ -182,7 +182,7 @@
     const selectedCategory = document.querySelector('#category-id option:checked').textContent;
 
     // Заменяем подпись отчёта
-    h1.innerHTML = `Отчётность по прогнозированию потребностей в фармакологической группе "${selectedCategory}"`;
+    h1.innerHTML = `Отчётность по аналитике потребностей в фармакологической группе "${selectedCategory}"`;
 
     // Увеличиваем график на всю страницу
     const originalWidth = canvas.style.width;
@@ -218,7 +218,7 @@
           pdf.save('report.pdf');
 
           // Возвращаем оригинальную подпись
-          h1.innerHTML = `Прогнозирование потребностей по фармакологической группе`;
+          h1.innerHTML = `Аналитика потребностей по фармакологической группе`;
 
           // Возвращаем точки на линиях графика
           updateChartPoints(true);
