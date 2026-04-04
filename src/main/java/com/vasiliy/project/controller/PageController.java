@@ -29,6 +29,11 @@ public class PageController {
     return "login";
   }
 
+  @GetMapping("/reset-password")
+  public String getResetPassword(){
+    return "reset-password";
+  }
+
   @GetMapping("/home")
   public String getHome(Model model) {
     model.addAttribute("username", authService.getCurrentUserUsername());

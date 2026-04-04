@@ -28,7 +28,8 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers(new AntPathRequestMatcher("/register/**")).permitAll()
+                        authorize.requestMatchers(new AntPathRequestMatcher("/reset-password")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/reset-password?success")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/**")).authenticated()
                 ).formLogin(
                         form -> form
