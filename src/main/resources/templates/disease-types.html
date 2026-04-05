@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Классы болезней, которые влияют на расход ЛС</title>
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <span th:text="'Здравствуйте, ' + ${username} + '!'"></span>
+  </div>
+  <div class="nav-right">
+    <a href="/logout">
+      <button>Выйти</button>
+    </a>
+  </div>
+</nav>
+
+<h1 style="text-align: center;">Классы болезней, которые влияют на расход ЛС</h1>
+
+<div class="add-form-form" id="form">
+  <div class="left-section">
+    <label for="disease-type-id">Выберите класс болезни:</label><br>
+    <select id="disease-type-id">
+      <option th:each="diseaseType : ${diseaseTypes}" th:value="${diseaseType.id}" th:text="${diseaseType.name}"></option>
+    </select><br><br>
+  </div>
+</div>
+
+<div style="margin-top: 60px;"></div>
+
+<div class="add-form">
+  <p>Предполагаемый коэффициент заболеваемости в этом году, высчитанный на основе предыдущих лет: <span id="nextWeekOutflowPrediction"></span> штук</p>
+  <p>Сезонность: <span id="nextMonthOutflowPrediction"></span> штук</p>
+  <br><br><br>
+  <div id="chart-container">
+    <canvas id="outflow-chart"></canvas>
+  </div>
+</div>
+
+<div class="button-container">
+  <a href="/home" class="home-button">Домой</a>
+</div>
+
+<script>
+  var myChart;
+
+  function getPredictionData() {
+    var productId = document.getElementById("product-id").value;
+    var weeksNumber = document.getElementById("weeks-number").value;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                document.getElementById('nextWeekOutflowPrediction').textContent = response.nextWeekOutflowPrediction.toFixed(2);
+                document.getElementById('nextMonthOutflowPrediction').textContent = response.nextMonthOutflowPrediction.toFixed(2);
+
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                var ctx = document.getElementById('outflow-chart').getContext('2d');
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: response.labels,
+                        datasets: [{
+                            label: 'Расход препарата',
+                            data: response.outflowValues,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            pointRadius: 3,  // начальный размер точек
+                            pointHoverRadius: 5  // начальный размер точек при наведении
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'График с каждым случаем расхода препарата за последние ' + weeksNumber + ' недель',
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+                myChart.update();
+            } else {
+                console.error('Ошибка при выполнении запроса:', xhr.status);
+            }
+        }
+    };
+    xhr.open('GET', '/analytics-product/' + productId + '-' + weeksNumber);
+    xhr.send();
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    getPredictionData();
+  });
+
+
+  document.getElementById('product-id').addEventListener('change', function() {
+    getPredictionData();
+  });
+
+  function updateChartPoints(showPoints) {
+      if (myChart && myChart.data.datasets) {
+          myChart.data.datasets.forEach(dataset => {
+              dataset.pointRadius = showPoints ? 3 : 0;  // размер точек (0 - точки не отображаются)
+              dataset.pointHoverRadius = showPoints ? 5 : 0; // размер точек при наведении (0 - точки не отображаются)
+          });
+          myChart.update();
+      }
+  }
+</script>
+</body>
+</html>

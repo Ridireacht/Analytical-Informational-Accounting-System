@@ -8,4 +8,8 @@ public interface CategoryService {
   List<Category> getAllCategories();
 
   List<Category> getAllCategoriesWithNbsp();
+
+  void calculateEpidemicMultipliers();
+
+  void calculateSeasonMultipliers();
 }

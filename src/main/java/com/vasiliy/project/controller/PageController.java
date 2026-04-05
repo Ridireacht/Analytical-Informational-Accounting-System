@@ -19,6 +19,7 @@ public class PageController {
   private final AccountingTypeService accountingTypeService;
   private final SupplierService supplierService;
   private final ProductService productService;
+  private final DiseaseTypeService diseaseTypeService;
   private final StorageProductService storageProductService;
   private final UserService userService;
   private final AuthService authService;
@@ -76,6 +77,13 @@ public class PageController {
     model.addAttribute("accountingTypes", accountingTypeService.getAllAccountingTypes());
     model.addAttribute("products", productService.getAllProducts());
     return "products";
+  }
+
+  @GetMapping("/disease-types")
+  public String getDiseaseTypes(Model model) {
+    model.addAttribute("username", authService.getCurrentUserUsername());
+    model.addAttribute("diseaseTypes", diseaseTypeService.getDiseaseTypes());
+    return "disease-types";
   }
 
   @GetMapping("/storage")

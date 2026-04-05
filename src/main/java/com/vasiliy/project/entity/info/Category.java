@@ -31,4 +31,21 @@ public class Category {
 
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
   private List<Product> products;
+
+  @Column(name = "epidemic_multiplier")
+  private Double epidemicMultiplier;
+
+  @Column(name = "next_month_season_multiplier")
+  private Double nextMonthSeasonMultiplier;
+
+  @Column(name = "next_week_season_multiplier")
+  private Double nextWeekSeasonMultiplier;
+
+  @ManyToMany
+  @JoinTable(
+          name = "category_disease_type",
+          joinColumns = @JoinColumn(name = "category_id"),
+          inverseJoinColumns = @JoinColumn(name = "disease_type_id")
+  )
+  private List<DiseaseType> diseaseTypes;
 }
