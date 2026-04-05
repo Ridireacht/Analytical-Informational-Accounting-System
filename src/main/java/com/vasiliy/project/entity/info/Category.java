@@ -41,11 +41,9 @@ public class Category {
   @Column(name = "next_week_season_multiplier")
   private Double nextWeekSeasonMultiplier;
 
-  @ManyToMany
-  @JoinTable(
-          name = "category_disease_type",
-          joinColumns = @JoinColumn(name = "category_id"),
-          inverseJoinColumns = @JoinColumn(name = "disease_type_id")
-  )
+  @Column(name = "current_season_multiplier")
+  private Double currentSeasonMultiplier;
+
+  @ManyToMany(mappedBy = "categories")
   private List<DiseaseType> diseaseTypes;
 }

@@ -33,6 +33,8 @@
     <th onclick="sortTable(0)">ID</th>
     <th onclick="sortTable(1)">Полный код</th>
     <th onclick="sortTable(2)">Название фармакологической группы</th>
+    <th onclick="sortTable(3)">Эпидемический коэффициент спроса</th>
+    <th onclick="sortTable(4)">Сезонный коэффициент спроса</th>
   </tr>
   </thead>
   <tbody>
@@ -40,6 +42,8 @@
     <td th:text="${category.id}"></td>
     <td th:text="${category.code}"></td>
     <td th:text="${category.name}"></td>
+    <td th:text="${category.epidemicMultiplier}"></td>
+    <td th:text="${category.currentSeasonMultiplier}"></td>
   </tr>
   </tbody>
 </table>

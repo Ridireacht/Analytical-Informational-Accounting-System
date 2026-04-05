@@ -15,7 +15,12 @@ public class DiseaseType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "diseaseTypes")
+    @ManyToMany
+    @JoinTable(
+            name = "category_disease_type",
+            joinColumns = @JoinColumn(name = "disease_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> categories;
 
     @ElementCollection

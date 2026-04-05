@@ -582,7 +582,6 @@ public class DataInitializer implements CommandLineRunner {
 
             diseaseTypeService.calculateEpidemicMultipliers();
             categoryService.calculateEpidemicMultipliers();
-            categoryService.calculateSeasonMultipliers();
         }
 
 

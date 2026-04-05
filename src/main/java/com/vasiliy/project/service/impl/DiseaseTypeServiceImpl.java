@@ -28,7 +28,9 @@ public class DiseaseTypeServiceImpl implements DiseaseTypeService {
         List<DiseaseType> diseaseTypes = diseaseTypeRepository.findAll();
 
         for (DiseaseType diseaseType : diseaseTypes) {
-            diseaseType.setEpidemicMultiplier(getNextYearPrediction(diseaseType.getDiseaseCountsPerYear()));
+            double average = diseaseType.getDiseaseCountsPerYear().stream().mapToDouble(Double::doubleValue).sum() / diseaseType.getYearsAccounted().stream().count();
+
+            diseaseType.setEpidemicMultiplier(getNextYearPrediction(diseaseType.getDiseaseCountsPerYear()) / average);
         }
 
         diseaseTypeRepository.saveAll(diseaseTypes);

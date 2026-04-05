@@ -67,6 +67,8 @@ public class CategoryServiceImpl implements CategoryService {
   public void calculateSeasonMultipliers() {
     List<Category> categories = categoryRepository.findAll();
     LocalDate now = LocalDate.now();
+
+    int monthNumForNow = now.getMonthValue() - 1;
     int monthNumForNextWeek = now.plusWeeks(1).getMonthValue() - 1;
     int monthNumForNextMonth = now.plusMonths(1).getMonthValue() - 1;
 
@@ -75,17 +77,21 @@ public class CategoryServiceImpl implements CategoryService {
         List<DiseaseType> diseaseTypes = category.getDiseaseTypes();
 
         int counter = 0;
+        double valueForNow = 0.0;
         double valueForNextWeek = 0.0;
         double valueForNextMonth = 0.0;
+
         for (DiseaseType diseaseType : diseaseTypes) {
-          if (diseaseType.getMonthMultipliers() != null) {
+          if (diseaseType.getMonthMultipliers() != null && !diseaseType.getMonthMultipliers().isEmpty()) {
             counter++;
+            valueForNow += diseaseType.getMonthMultipliers().get(monthNumForNow);
             valueForNextWeek += diseaseType.getMonthMultipliers().get(monthNumForNextWeek);
             valueForNextMonth += diseaseType.getMonthMultipliers().get(monthNumForNextMonth);
           }
         }
 
         if (counter != 0) {
+          category.setCurrentSeasonMultiplier(valueForNow / counter);
           category.setNextWeekSeasonMultiplier(valueForNextWeek / counter);
           category.setNextWeekSeasonMultiplier(valueForNextMonth / counter);
         }

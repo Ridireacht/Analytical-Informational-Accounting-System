@@ -57,6 +57,7 @@ public class PageController {
 
   @GetMapping("/categories")
   public String getCategories(Model model) {
+    categoryService.calculateSeasonMultipliers();
     model.addAttribute("username", authService.getCurrentUserUsername());
     model.addAttribute("categories", categoryService.getAllCategories());
     return "categories";
