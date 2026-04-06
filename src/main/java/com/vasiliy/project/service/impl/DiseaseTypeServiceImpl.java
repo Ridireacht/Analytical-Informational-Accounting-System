@@ -1,5 +1,6 @@
 package com.vasiliy.project.service.impl;
 
+import com.vasiliy.project.dto.info.CategoryDTO;
 import com.vasiliy.project.dto.info.DiseaseTypeDTO;
 import com.vasiliy.project.entity.info.Category;
 import com.vasiliy.project.entity.info.DiseaseType;
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +20,30 @@ public class DiseaseTypeServiceImpl implements DiseaseTypeService {
     private final DiseaseTypeRepository diseaseTypeRepository;
 
     @Override
-    public List<DiseaseType> getDiseaseTypes() {
-        return diseaseTypeRepository.findAll();
+    public List<DiseaseTypeDTO> getDiseaseTypes() {
+        List<DiseaseType> diseaseTypes = diseaseTypeRepository.findAll();
+        List<DiseaseTypeDTO> diseaseTypeDTOS = new ArrayList<>();
+
+        for (DiseaseType diseaseType : diseaseTypes) {
+            DiseaseTypeDTO currentDto = new DiseaseTypeDTO();
+            currentDto.setId(diseaseType.getId());
+            currentDto.setName(diseaseType.getName());
+
+            List<CategoryDTO> categoryDTOS = new ArrayList<>();
+            for (Category category : diseaseType.getCategories()) {
+                categoryDTOS.add(new CategoryDTO(category.getId(), category.getCode(), category.getName()));
+            }
+
+            currentDto.setCategories(categoryDTOS);
+            currentDto.setEpidemicMultiplier(diseaseType.getEpidemicMultiplier());
+            currentDto.setMonthMultipliers(diseaseType.getMonthMultipliers());
+            currentDto.setDiseaseCountsPerYear(diseaseType.getDiseaseCountsPerYear());
+            currentDto.setYearsAccounted(diseaseType.getYearsAccounted());
+
+            diseaseTypeDTOS.add(currentDto);
+        }
+
+        return diseaseTypeDTOS;
     }
 
     @Override

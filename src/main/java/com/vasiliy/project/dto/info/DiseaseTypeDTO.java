@@ -1,5 +1,6 @@
 package com.vasiliy.project.dto.info;
 
+import com.vasiliy.project.entity.info.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,17 +12,15 @@ public class DiseaseTypeDTO {
 
     private Long id;
 
-    private Double currentYearMultiplier;
-
-    private List<Double> monthMultipliers;
-
-    private Double nextWeekMultiplier;
-
-    private Double nextMonthMultiplier;
-
-    private List<Integer> years_accounted;
+    private List<CategoryDTO> categories;
 
     private List<Double> diseaseCountsPerYear;
 
-    private String diseaseName;
+    private Double epidemicMultiplier;
+
+    private List<String> yearsAccounted;
+
+    private String name;
+
+    private List<Double> monthMultipliers;
 }

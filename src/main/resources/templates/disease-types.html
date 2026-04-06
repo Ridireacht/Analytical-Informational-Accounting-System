@@ -56,6 +56,7 @@
   <tr>
     <th>ID</th>
     <th>Полный код</th>
+    <th>Название фармакологической группы</th>
   </tr>
   </thead>
   <tbody id="records-tbody">
@@ -85,7 +86,7 @@
       // добавляем категории в таблицу
       selectedType.categories.forEach(cat => {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${cat.id}</td><td>${cat.code}</td>`;
+          tr.innerHTML = `<td>${cat.id}</td><td>${cat.code}</td><td>${cat.name}</td>`;
           tbody.appendChild(tr);
       });
   }
