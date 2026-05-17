@@ -419,7 +419,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType1.getCategories().addAll(categoryRepository.findByCodeStartingWith("0010-0030"));
             diseaseType1.getCategories().addAll(categoryRepository.findByCodeStartingWith("0010-0040"));
             diseaseType1.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType1.setDiseaseCountsPerYear(List.of(2227.0, 2179.0, 2246.0, 2174.0, 2228.0, 2178.0, 2318.0, 2361.0, 2419.0, 2374.0, 2345.0, 2354.0, 2329.6, 2364.5, 2369.9, 2256.6, 2231.2, 2204.1, 2167.7, 2171.9, 1836.5, 1974.8, 2057.0, 2098.9, 2135.0));
+            diseaseType1.setDiseaseCountsPerYear(List.of(15.3, 15.0, 15.6, 15.1, 15.6, 15.3, 16.2, 16.5, 16.9, 16.6, 16.4, 16.5, 16.2, 16.4, 16.2, 15.4, 15.1, 14.9, 14.7, 14.7, 12.4, 13.4, 14.0, 14.3, 14.6));
 
             DiseaseType diseaseType2 = new DiseaseType();
             diseaseType2.setName("Болезни системы кровообращения");
@@ -434,7 +434,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType2.getCategories().addAll(categoryRepository.findByCodeStartingWith("0010-0010-0030"));
             diseaseType2.getCategories().addAll(categoryRepository.findByCodeStartingWith("0010-0020"));
             diseaseType2.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType2.setDiseaseCountsPerYear(List.of(2483.0, 2605.0, 2805.0, 2954.0, 3146.0, 3278.0, 3787.0, 3719.0, 3781.0, 3761.0, 3734.0, 3803.6, 3813.7, 4284.8, 4205.0, 4563.0, 4648.6, 4706.5, 4783.7, 5135.6, 4302.5, 4455.7, 4928.7, 5196.4, 5652.8));
+            diseaseType2.setDiseaseCountsPerYear(List.of(17.1, 18.0, 19.5, 20.6, 22.0, 23.0, 26.5, 26.0, 26.5, 26.3, 26.1, 26.6, 26.6, 29.8, 28.7, 31.0, 31.5, 31.9, 32.4, 34.7, 29.1, 30.3, 33.6, 35.5, 38.7));
             diseaseType2.setMonthMultipliers(List.of(1.15, 1.10, 1.05, 1.00, 0.95, 0.95, 1.00, 1.00, 0.98, 1.02, 1.08, 1.12));
 
             DiseaseType diseaseType3 = new DiseaseType();
@@ -446,7 +446,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType3.getCategories().addAll(categoryRepository.findByCodeStartingWith("0070-0030"));
             diseaseType3.getCategories().addAll(categoryRepository.findByCodeStartingWith("0070-0050"));
             diseaseType3.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType3.setDiseaseCountsPerYear(List.of(46170.0, 43012.0, 43005.0, 44560.0, 41946.0, 41915.0, 42338.0, 42958.0, 43221.0, 48148.0, 46281.0, 48436.7, 47381.3, 48568.3, 48707.9, 49463.9, 51572.6, 51905.0, 52832.6, 52277.6, 54273.3, 59381.9, 61918.8, 59829.8, 58725.4));
+            diseaseType3.setDiseaseCountsPerYear(List.of(317.2, 296.8, 298.2, 310.4, 293.4, 294.4, 296.0, 300.8, 302.8, 337.2, 324.0, 338.7, 330.5, 337.7, 332.5, 336.6, 349.9, 351.4, 357.4, 353.5, 367.4, 403.4, 422.0, 409.0, 401.9));
             diseaseType3.setMonthMultipliers(List.of(1.30, 1.25, 1.15, 1.00, 0.85, 0.75, 0.70, 0.75, 0.90, 1.10, 1.20, 1.35));
 
             DiseaseType diseaseType4 = new DiseaseType();
@@ -457,7 +457,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType4.getCategories().addAll(categoryRepository.findByCodeStartingWith("0080-0140"));
             diseaseType4.getCategories().addAll(categoryRepository.findByCodeStartingWith("0080-0120"));
             diseaseType4.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType4.setDiseaseCountsPerYear(List.of(4698.0, 4841.0, 5149.0, 5063.0, 5079.0, 5034.0, 5024.0, 4904.0, 4910.0, 4902.0, 4778.0, 4766.9, 4981.9, 5055.3, 5342.3, 5163.1, 5228.7, 4985.8, 4856.3, 4693.5, 3855.0, 3920.8, 3985.7, 4095.7, 4182.0));
+            diseaseType4.setDiseaseCountsPerYear(List.of(32.3, 33.4, 35.7, 35.3, 35.5, 35.4, 35.1, 34.3, 34.4, 34.3, 33.4, 33.3, 34.7, 35.2, 36.5, 35.1, 35.5, 33.8, 32.9, 31.7, 26.1, 26.6, 27.2, 28.0, 28.6));
 
             DiseaseType diseaseType5 = new DiseaseType();
             diseaseType5.setName("Болезни эндокринной системы и обмена веществ");
@@ -465,7 +465,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType5.getCategories().addAll(categoryRepository.findByCodeStartingWith("0040"));
             diseaseType5.getCategories().addAll(categoryRepository.findByCodeStartingWith("0080"));
             diseaseType5.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType5.setDiseaseCountsPerYear(List.of(1234.0, 1297.0, 1546.0, 1373.0, 1407.0, 1361.0, 1672.0, 1638.0, 1629.0, 1481.0, 1461.0, 1474.5, 1519.3, 1526.7, 1635.9, 1952.8, 2037.6, 2050.1, 1926.7, 2116.7, 1617.0, 1669.7, 1831.4, 2053.4, 2419.9));
+            diseaseType5.setDiseaseCountsPerYear(List.of(8.5, 8.9, 10.7, 9.6, 9.8, 9.6, 11.7, 11.5, 11.4, 10.4, 10.2, 10.3, 10.6, 10.6, 11.2, 13.3, 13.8, 13.9, 13.0, 14.3, 10.9, 11.3, 12.5, 14.0, 16.6));
 
             DiseaseType diseaseType6 = new DiseaseType();
             diseaseType6.setName("Инфекционные и паразитарные болезни");
@@ -474,7 +474,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType6.getCategories().addAll(categoryRepository.findByCodeStartingWith("0060-0010"));
             diseaseType6.getCategories().addAll(categoryRepository.findByCodeStartingWith("0060-0040"));
             diseaseType6.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType6.setDiseaseCountsPerYear(List.of(6448.0, 6350.0, 5939.0, 5414.0, 5505.0, 5312.0, 5327.0, 5332.0, 5187.0, 4916.0, 4690.0, 4626.1, 4591.8, 4434.1, 4504.1, 4116.3, 4086.4, 4012.1, 3970.5, 3902.5, 2999.4, 3114.6, 3324.4, 3433.0, 3587.5));
+            diseaseType6.setDiseaseCountsPerYear(List.of(44.3, 43.8, 41.2, 37.7, 38.5, 37.3, 37.2, 37.3, 36.3, 34.4, 32.8, 32.3, 32.0, 30.8, 30.7, 28.0, 27.7, 27.2, 26.9, 26.4, 20.3, 21.2, 22.7, 23.5, 24.5));
             diseaseType6.setMonthMultipliers(List.of(1.25, 1.20, 1.10, 0.95, 0.90, 1.00, 1.10, 1.05, 1.00, 1.10, 1.20, 1.30));
 
             DiseaseType diseaseType7 = new DiseaseType();
@@ -483,7 +483,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType7.getCategories().addAll(categoryRepository.findByCodeStartingWith("0020"));
             diseaseType7.getCategories().addAll(categoryRepository.findByCodeStartingWith("0060"));
             diseaseType7.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType7.setDiseaseCountsPerYear(List.of(551.0, 563.0, 731.0, 626.0, 648.0, 647.0, 765.0, 776.0, 758.0, 724.0, 705.0, 676.3, 674.7, 668.2, 688.2, 691.6, 688.1, 659.2, 627.7, 613.0, 480.1, 513.9, 539.6, 557.0, 581.8));
+            diseaseType7.setDiseaseCountsPerYear(List.of(3.8, 3.9, 5.1, 4.4, 4.5, 4.5, 5.3, 5.4, 5.3, 5.1, 4.9, 4.7, 4.7, 4.6, 4.7, 4.7, 4.7, 4.5, 4.2, 4.1, 3.3, 3.5, 3.7, 3.8, 4.0));
 
             DiseaseType diseaseType8 = new DiseaseType();
             diseaseType8.setName("Новообразования");
@@ -492,7 +492,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType8.getCategories().addAll(categoryRepository.findByCodeStartingWith("0060"));
             diseaseType8.getCategories().addAll(categoryRepository.findByCodeStartingWith("0040"));
             diseaseType8.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType8.setDiseaseCountsPerYear(List.of(1226.0, 1239.0, 1295.0, 1287.0, 1375.0, 1357.0, 1418.0, 1437.0, 1437.0, 1525.0, 1540.0, 1586.1, 1656.0, 1628.9, 1693.1, 1671.6, 1668.1, 1674.1, 1704.6, 1744.0, 1440.1, 1484.1, 1593.8, 1711.8, 1754.7));
+            diseaseType8.setDiseaseCountsPerYear(List.of(8.4, 8.5, 9.0, 9.0, 9.6, 9.5, 9.9, 10.1, 10.1, 10.7, 10.8, 11.1, 11.5, 11.3, 11.6, 11.4, 11.3, 11.3, 11.5, 11.8, 9.7, 10.1, 10.9, 11.7, 12.0));
 
             DiseaseType diseaseType9 = new DiseaseType();
             diseaseType9.setName("Болезни глаза");
@@ -500,7 +500,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType9.getCategories().addAll(categoryRepository.findByCodeStartingWith("0110-0025"));
             diseaseType9.getCategories().addAll(categoryRepository.findByCodeStartingWith("0010"));
             diseaseType9.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType9.setDiseaseCountsPerYear(List.of(4638.0, 4701.0, 4836.0, 4722.0, 4871.0, 4778.0, 5107.0, 4976.0, 4858.0, 4778.0, 4715.0, 4757.6, 5043.3, 5023.4, 5067.0, 4878.3, 4786.8, 4640.7, 4612.2, 4409.6, 3506.5, 3632.4, 3679.1, 3815.1, 3895.9));
+            diseaseType9.setDiseaseCountsPerYear(List.of(31.9, 32.4, 33.5, 33.0, 34.2, 33.6, 35.7, 34.8, 34.0, 33.5, 33.0, 33.3, 35.2, 34.9, 34.6, 33.2, 32.5, 31.4, 31.2, 29.8, 23.7, 24.7, 25.1, 26.1, 26.7));
 
             DiseaseType diseaseType10 = new DiseaseType();
             diseaseType10.setName("Болезни уха");
@@ -509,7 +509,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType10.getCategories().addAll(categoryRepository.findByCodeStartingWith("0120"));
             diseaseType10.getCategories().addAll(categoryRepository.findByCodeStartingWith("0110-0010"));
             diseaseType10.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType10.setDiseaseCountsPerYear(List.of(3191.0, 3234.0, 3305.0, 3231.0, 3415.0, 3425.0, 3502.0, 3563.0, 3526.0, 3733.0, 3867.0, 3975.1, 4032.4, 4013.8, 4049.9, 3893.1, 3863.4, 3799.1, 3748.4, 3668.6, 3008.1, 3112.2, 3266.3, 3505.9, 3656.4));
+            diseaseType10.setDiseaseCountsPerYear(List.of(21.9, 22.3, 22.9, 22.6, 24.0, 24.1, 24.5, 24.9, 24.7, 26.1, 27.1, 27.8, 28.1, 27.9, 27.6, 26.5, 26.2, 25.7, 25.4, 24.8, 20.4, 21.1, 22.3, 24.0, 25.0));
 
             DiseaseType diseaseType11 = new DiseaseType();
             diseaseType11.setName("Болезни кожи");
@@ -519,7 +519,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType11.getCategories().addAll(categoryRepository.findByCodeStartingWith("0120"));
             diseaseType11.getCategories().addAll(categoryRepository.findByCodeStartingWith("0060"));
             diseaseType11.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType11.setDiseaseCountsPerYear(List.of(6407.0, 6561.0, 6763.0, 6763.0, 6993.0, 7073.0, 7239.0, 7161.0, 7056.0, 6991.0, 6886.0, 6794.7, 6876.3, 6739.9, 6767.4, 6436.8, 6241.0, 6017.4, 5915.3, 5977.3, 4979.0, 5194.3, 5292.0, 5543.1, 5587.6));
+            diseaseType11.setDiseaseCountsPerYear(List.of(44.0, 45.3, 46.9, 47.1, 48.9, 49.7, 50.6, 50.1, 49.4, 49.0, 48.2, 47.5, 48.0, 46.9, 46.2, 43.8, 42.3, 40.7, 40.0, 40.4, 33.7, 35.3, 36.1, 37.9, 38.2));
             diseaseType11.setMonthMultipliers(List.of(0.85, 0.90, 0.95, 1.00, 1.10, 1.20, 1.30, 1.25, 1.10, 1.00, 0.95, 0.90));
 
             DiseaseType diseaseType12 = new DiseaseType();
@@ -529,7 +529,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType12.getCategories().addAll(categoryRepository.findByCodeStartingWith("0100"));
             diseaseType12.getCategories().addAll(categoryRepository.findByCodeStartingWith("0090-0120"));
             diseaseType12.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType12.setDiseaseCountsPerYear(List.of(4452.0, 4583.0, 5059.0, 4818.0, 4875.0, 4746.0, 5040.0, 5022.0, 5013.0, 4952.0, 4789.0, 4808.9, 4761.0, 4633.7, 4647.0, 4409.7, 4331.5, 4331.1, 4382.4, 4450.5, 3662.6, 3893.8, 4209.8, 4561.6, 4752.0));
+            diseaseType12.setDiseaseCountsPerYear(List.of(30.6, 31.6, 35.1, 33.6, 34.1, 33.3, 35.2, 35.2, 35.1, 34.7, 33.5, 33.6, 33.2, 32.2, 31.7, 30.0, 29.4, 29.3, 29.6, 30.1, 24.8, 26.4, 28.7, 31.2, 32.5));
             diseaseType12.setMonthMultipliers(List.of(1.20, 1.15, 1.10, 1.00, 0.95, 0.90, 0.90, 0.95, 1.00, 1.05, 1.10, 1.15));
 
             DiseaseType diseaseType13 = new DiseaseType();
@@ -539,7 +539,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType13.getCategories().addAll(categoryRepository.findByCodeStartingWith("0070-0026"));
             diseaseType13.getCategories().addAll(categoryRepository.findByCodeStartingWith("0040"));
             diseaseType13.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType13.setDiseaseCountsPerYear(List.of(5470.0, 5627.0, 5880.0, 6035.0, 6523.0, 6560.0, 6967.0, 6940.0, 6916.0, 6835.0, 6842.0, 7050.2, 7101.0, 7147.1, 7164.1, 6792.9, 6689.0, 6582.8, 6581.7, 6527.7, 5268.2, 5383.2, 5529.2, 5719.6, 5755.3));
+            diseaseType13.setDiseaseCountsPerYear(List.of(37.6, 38.8, 40.8, 42.0, 45.6, 46.1, 48.7, 48.6, 48.4, 47.9, 47.9, 49.3, 49.5, 49.7, 48.9, 46.2, 45.4, 44.6, 44.5, 44.1, 35.7, 36.6, 37.7, 39.1, 39.4));
             diseaseType13.setMonthMultipliers(List.of(1.05, 1.00, 0.98, 0.95, 1.00, 1.10, 1.15, 1.10, 1.05, 1.00, 1.00, 1.05));
 
             DiseaseType diseaseType14 = new DiseaseType();
@@ -549,7 +549,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType14.getCategories().addAll(categoryRepository.findByCodeStartingWith("0110-0060-0060"));
             diseaseType14.getCategories().addAll(categoryRepository.findByCodeStartingWith("0040"));
             diseaseType14.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType14.setDiseaseCountsPerYear(List.of(2085.0, 2181.0, 2386.0, 2512.0, 2468.0, 2471.0, 2519.0, 2651.0, 2736.0, 2881.0, 2888.8, 2815.7, 2832.1, 2777.8, 2801.3, 2618.1, 2450.1, 2352.4, 2203.9, 2126.4, 1973.9, 1959.7, 1824.9, 1794.1, 1727.6));
+            diseaseType14.setDiseaseCountsPerYear(List.of(52.9, 55.1, 60.2, 62.8, 62.5, 63.0, 64.2, 68.2, 71.2, 76.0, 77.2, 76.4, 77.8, 77.2, 77.5, 73.0, 68.8, 66.4, 62.4, 60.5, 56.5, 56.4, 52.9, 52.3, 50.6));
 
             DiseaseType diseaseType15 = new DiseaseType();
             diseaseType15.setName("Травмы, отравления");
@@ -559,7 +559,7 @@ public class DataInitializer implements CommandLineRunner {
             diseaseType15.getCategories().addAll(categoryRepository.findByCodeStartingWith("0090-0040"));
             diseaseType15.getCategories().addAll(categoryRepository.findByCodeStartingWith("0090-0050"));
             diseaseType15.setYearsAccounted(List.of("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"));
-            diseaseType15.setDiseaseCountsPerYear(List.of(12544.0, 12716.0, 12866.0, 12903.0, 12846.0, 12808.0, 12759.0, 13072.0, 13021.0, 12855.0, 13096.0, 13261.4, 13425.5, 13285.3, 13182.8, 13234.9, 13063.0, 12946.4, 13072.2, 13270.2, 11908.2, 12192.0, 12553.4, 12768.6, 13069.7));
+            diseaseType15.setDiseaseCountsPerYear(List.of(86.2, 87.7, 89.2, 89.9, 89.9, 90.0, 89.2, 91.5, 91.2, 90.0, 91.7, 92.7, 93.6, 92.4, 90.0, 90.1, 88.6, 87.7, 88.4, 89.7, 80.6, 82.8, 85.6, 87.3, 89.4));
             diseaseType15.setMonthMultipliers(List.of(1.20, 1.10, 1.00, 0.95, 1.05, 1.20, 1.30, 1.25, 1.10, 1.00, 1.05, 1.15));
 
             diseaseTypes.add(diseaseType1);
