@@ -1,9 +1,11 @@
 package com.vasiliy.project.service.impl;
 
 import com.vasiliy.project.dto.info.PredictionCategoryDataDTO;
+import com.vasiliy.project.entity.info.Category;
 import com.vasiliy.project.entity.info.Product;
 import com.vasiliy.project.entity.records.SoldRecord;
 import com.vasiliy.project.entity.records.WrittenOffRecord;
+import com.vasiliy.project.repository.CategoryRepository;
 import com.vasiliy.project.repository.ProductRepository;
 import com.vasiliy.project.repository.SoldRecordRepository;
 import com.vasiliy.project.repository.WrittenOffRecordRepository;
@@ -24,6 +26,7 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
     private final SoldRecordRepository soldRecordRepository;
     private final WrittenOffRecordRepository writtenOffRecordRepository;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     private final PredictionCategoryDataDTO predictionCategoryDataDTO = new PredictionCategoryDataDTO();
 
@@ -77,7 +80,6 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
     public List<Integer> collectOutflowValues(Long categoryId, Integer numberOfLastWeeks) {
 
         LocalDateTime endDateTime = LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.DAYS);
-
 
         // Собираем препараты, входящие в фармакологическую группу
         List<Product> products = productRepository.findProductsByCategoryId(categoryId);
@@ -147,6 +149,30 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
         List<Integer> weekOutflowValues = new ArrayList<>();
         List<Integer> monthOutflowValues = new ArrayList<>();
 
+
+        // Получаем применяемые по фармакологической группе категории
+        Category category = categoryRepository.findById(categoryId).get();
+        double epidemicMultiplier, nextWeekSeasonMultiplier, nextMonthSeasonMultiplier;
+
+        if (category.getEpidemicMultiplier() == null) {
+            epidemicMultiplier = 1.0;
+        } else {
+            epidemicMultiplier = category.getEpidemicMultiplier();
+        }
+
+        if (category.getNextWeekSeasonMultiplier() == null) {
+            nextWeekSeasonMultiplier = 1.0;
+        } else {
+            nextWeekSeasonMultiplier = category.getNextWeekSeasonMultiplier();
+        }
+
+        if (category.getNextMonthSeasonMultiplier() == null) {
+            nextMonthSeasonMultiplier = 1.0;
+        } else {
+            nextMonthSeasonMultiplier = category.getNextMonthSeasonMultiplier();
+        }
+
+
         predictionCategoryDataDTO.setLabels(new ArrayList<>());
         predictionCategoryDataDTO.setOutflowValuesLists(new ArrayList<>());
         predictionCategoryDataDTO.setNextWeekOutflowPredictions(new ArrayList<>());
@@ -185,7 +211,8 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
 
 
         // Проводим прогнозирование фармакологической группы на следующую неделю
-        predictionCategoryDataDTO.getNextWeekOutflowPredictions().add(getNextWeekPrediction(weekOutflowValues));
+        double nextWeekOutflowPrediction = getNextWeekPrediction(weekOutflowValues) * epidemicMultiplier * nextWeekSeasonMultiplier;
+        predictionCategoryDataDTO.getNextWeekOutflowPredictions().add(nextWeekOutflowPrediction);
 
 
         // Собираем список расхода товаров по месяцам.
@@ -204,7 +231,8 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
 
         // Проводим прогнозирование фармакологической группы на следующий месяц (если накопилось данных хотя бы на месяц)
         if (!monthOutflowValues.isEmpty()) {
-            predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(getNextMonthPrediction(monthOutflowValues));
+            double nextMonthOutflowPrediction = getNextMonthPrediction(monthOutflowValues) * epidemicMultiplier * nextMonthSeasonMultiplier;
+            predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(nextMonthOutflowPrediction);
         } else {
             predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(0.0);
         }
@@ -230,7 +258,8 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
             }
 
             // Делаем прогноз препарата на следующую неделю
-            predictionCategoryDataDTO.getNextWeekOutflowPredictions().add(getNextWeekPrediction(weekOutflowValuesProduct));
+            double nextWeekOutflowPredictionProduct = getNextWeekPrediction(weekOutflowValuesProduct) * epidemicMultiplier * nextWeekSeasonMultiplier;
+            predictionCategoryDataDTO.getNextWeekOutflowPredictions().add(nextWeekOutflowPredictionProduct);
 
 
             // Собираем список расхода препарата по месяцам.
@@ -249,7 +278,8 @@ public class PredictionCategoryServiceImpl implements PredictionCategoryService 
 
             // Проводим прогнозирование препарата на следующий месяц (если накопилось данных хотя бы на месяц)
             if (!monthOutflowValuesProduct.isEmpty()) {
-                predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(getNextMonthPrediction(monthOutflowValuesProduct));
+                double nextMonthOutflowPredictionProduct = getNextMonthPrediction(monthOutflowValuesProduct) * epidemicMultiplier * nextMonthSeasonMultiplier;
+                predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(nextMonthOutflowPredictionProduct);
             } else {
                 predictionCategoryDataDTO.getNextMonthOutflowPredictions().add(0.0);
             }

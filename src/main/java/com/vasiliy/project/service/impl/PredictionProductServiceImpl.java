@@ -1,8 +1,12 @@
 package com.vasiliy.project.service.impl;
 
 import com.vasiliy.project.dto.info.PredictionProductDataDTO;
+import com.vasiliy.project.entity.info.Category;
+import com.vasiliy.project.entity.info.Product;
 import com.vasiliy.project.entity.records.SoldRecord;
 import com.vasiliy.project.entity.records.WrittenOffRecord;
+import com.vasiliy.project.repository.CategoryRepository;
+import com.vasiliy.project.repository.ProductRepository;
 import com.vasiliy.project.repository.SoldRecordRepository;
 import com.vasiliy.project.repository.WrittenOffRecordRepository;
 import com.vasiliy.project.service.PredictionProductService;
@@ -22,6 +26,8 @@ public class PredictionProductServiceImpl implements PredictionProductService {
 
   private final SoldRecordRepository soldRecordRepository;
   private final WrittenOffRecordRepository writtenOffRecordRepository;
+  private final CategoryRepository categoryRepository;
+  private final ProductRepository productRepository;
 
   private final PredictionProductDataDTO predictionProductDataDTO = new PredictionProductDataDTO();
 
@@ -97,6 +103,30 @@ public class PredictionProductServiceImpl implements PredictionProductService {
     List<Integer> weekOutflowValues = new ArrayList<>();
     List<Integer> monthOutflowValues = new ArrayList<>();
 
+
+    // Получаем применяемые по фармакологической группе категории;
+    Category category = categoryRepository.findCategoryByProductId(productId);
+    double epidemicMultiplier, nextWeekSeasonMultiplier, nextMonthSeasonMultiplier;
+
+    if (category.getEpidemicMultiplier() == null) {
+      epidemicMultiplier = 1.0;
+    } else {
+      epidemicMultiplier = category.getEpidemicMultiplier();
+    }
+
+    if (category.getNextWeekSeasonMultiplier() == null) {
+      nextWeekSeasonMultiplier = 1.0;
+    } else {
+      nextWeekSeasonMultiplier = category.getNextWeekSeasonMultiplier();
+    }
+
+    if (category.getNextMonthSeasonMultiplier() == null) {
+      nextMonthSeasonMultiplier = 1.0;
+    } else {
+      nextMonthSeasonMultiplier = category.getNextMonthSeasonMultiplier();
+    }
+
+
     predictionProductDataDTO.setLabels(new ArrayList<>());
     predictionProductDataDTO.setOutflowValues(new ArrayList<>());
     predictionProductDataDTO.setNextWeekOutflowPrediction(null);
@@ -148,12 +178,14 @@ public class PredictionProductServiceImpl implements PredictionProductService {
 
 
     // Проводим прогнозирование на следующую неделю
-    predictionProductDataDTO.setNextWeekOutflowPrediction(getNextWeekPrediction(weekOutflowValues));
+    double nextWeekOutflowPrediction = getNextWeekPrediction(weekOutflowValues) * epidemicMultiplier * nextWeekSeasonMultiplier;
+    predictionProductDataDTO.setNextWeekOutflowPrediction(nextWeekOutflowPrediction);
 
 
     // Проводим прогнозирование на следующий месяц (если накопилось данных хотя бы на месяц)
     if (!monthOutflowValues.isEmpty()) {
-      predictionProductDataDTO.setNextMonthOutflowPrediction(getNextMonthPrediction(monthOutflowValues));
+      double nextMonthOutflowPrediction = getNextMonthPrediction(monthOutflowValues) * epidemicMultiplier * nextMonthSeasonMultiplier;
+      predictionProductDataDTO.setNextMonthOutflowPrediction(nextMonthOutflowPrediction);
     } else {
       predictionProductDataDTO.setNextMonthOutflowPrediction(0.0);
     }
