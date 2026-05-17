@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     List<Category> categories = categoryRepository.findAll();
 
     for (Category category : categories) {
-      if (category.getDiseaseTypes() != null) {
+      if (!category.getDiseaseTypes().isEmpty()) {
         List<DiseaseType> diseaseTypes = category.getDiseaseTypes();
 
         int counter = 0;
@@ -55,7 +55,10 @@ public class CategoryServiceImpl implements CategoryService {
           value += diseaseType.getEpidemicMultiplier();
         }
 
-        category.setEpidemicMultiplier(value / counter);
+        double result = value / counter;
+        double roundedResult = Math.round(result * 100.0) / 100.0;
+
+        category.setEpidemicMultiplier(roundedResult);
       }
     }
 
@@ -91,9 +94,13 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         if (counter != 0) {
-          category.setCurrentSeasonMultiplier(valueForNow / counter);
-          category.setNextWeekSeasonMultiplier(valueForNextWeek / counter);
-          category.setNextWeekSeasonMultiplier(valueForNextMonth / counter);
+          double currentSeasonMultiplier = valueForNow / counter;
+          double nextWeekSeasonMultiplier = valueForNextWeek / counter;
+          double nextMonthSeasonMultiplier = valueForNextMonth / counter;
+
+          category.setCurrentSeasonMultiplier(Math.round(currentSeasonMultiplier * 100.0) / 100.0);
+          category.setNextWeekSeasonMultiplier(Math.round(nextWeekSeasonMultiplier * 100.0) / 100.0);
+          category.setNextMonthSeasonMultiplier(Math.round(nextMonthSeasonMultiplier * 100.0) / 100.0);
         }
       }
     }

@@ -54,7 +54,11 @@ public class DiseaseTypeServiceImpl implements DiseaseTypeService {
         for (DiseaseType diseaseType : diseaseTypes) {
             double average = diseaseType.getDiseaseCountsPerYear().stream().mapToDouble(Double::doubleValue).sum() / diseaseType.getYearsAccounted().stream().count();
 
-            diseaseType.setEpidemicMultiplier(getNextYearPrediction(diseaseType.getDiseaseCountsPerYear()) / average);
+            double result = getNextYearPrediction(diseaseType.getDiseaseCountsPerYear()) / average;
+
+            double roundedResult = Math.round(result * 100.0) / 100.0;
+
+            diseaseType.setEpidemicMultiplier(roundedResult);
         }
 
         diseaseTypeRepository.saveAll(diseaseTypes);
