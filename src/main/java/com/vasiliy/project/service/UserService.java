@@ -16,4 +16,6 @@ public interface UserService {
     Boolean updateUser(Long userId, UpdateRequest updateRequest);
 
     Boolean deleteUser(Long userId);
+
+    void resetPassword(String email);
 }

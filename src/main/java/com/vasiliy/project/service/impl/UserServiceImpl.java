@@ -3,9 +3,10 @@ package com.vasiliy.project.service.impl;
 import com.vasiliy.project.dto.UserDto;
 import com.vasiliy.project.dto.info.UpdateRequest;
 import com.vasiliy.project.entity.User;
-import com.vasiliy.project.entity.info.Supplier;
+import java.security.SecureRandom;
 import com.vasiliy.project.repository.RoleRepository;
 import com.vasiliy.project.repository.UserRepository;
+import com.vasiliy.project.service.MailService;
 import com.vasiliy.project.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +22,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private MailService mailService;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           MailService mailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
     }
 
     @Override
@@ -56,6 +60,20 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    @Override
+    public void resetPassword(String email) {
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            String newPassword = generatePassword(12);
+
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+
+            mailService.sendNewPassword(email, newPassword);
+        }
     }
 
     @Override
@@ -93,5 +111,21 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+
+    private String generatePassword(int length) {
+        String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+
+        SecureRandom random = new SecureRandom();
+
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(CHARS.length());
+            password.append(CHARS.charAt(index));
+        }
+
+        return password.toString();
     }
 }

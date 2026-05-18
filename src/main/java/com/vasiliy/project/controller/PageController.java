@@ -1,11 +1,15 @@
 package com.vasiliy.project.controller;
 
+import com.vasiliy.project.dto.info.EmailDTO;
 import com.vasiliy.project.entity.info.Category;
 import com.vasiliy.project.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +37,13 @@ public class PageController {
   @GetMapping("/reset-password")
   public String getResetPassword(){
     return "reset-password";
+  }
+
+  @PostMapping("/reset-password")
+  public ResponseEntity<String> resetPassword(@RequestBody EmailDTO emailDTO){
+    userService.resetPassword(emailDTO.getEmail());
+
+    return ResponseEntity.ok().body("{}");
   }
 
   @GetMapping("/home")
