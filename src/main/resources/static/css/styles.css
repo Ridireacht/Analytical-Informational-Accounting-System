@@ -280,6 +280,18 @@ th:hover {
   margin: 0 auto;
 }
 
+.chart-container-outflow {
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+.chart-container-quantity {
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+}
+
 #searchInput {
   padding: 8px;
   border: 1px solid #ccc;
@@ -289,6 +301,18 @@ th:hover {
 }
 
 #chart-container {
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+#chart-container-outflow {
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+#chart-container-quantity {
   width: 1000px;
   height: 500px;
   margin: 0 auto;

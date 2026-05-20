@@ -31,19 +31,23 @@
   </div>
   <div class="right-section">
     <label for="weeks-number">За последние N недель:</label><br>
-    <input type="number" id="weeks-number" name="weeks-number" min="1" max="100" step="1" value="10"><br><br>
+    <input type="number" id="weeks-number" name="weeks-number" min="1" max="100" step="1" value="8"><br><br>
   </div>
 </div>
 
 <div style="margin-top: 60px;"></div>
 
 <div class="add-form">
+  <div id="chart-container-quantity">
+    <canvas id="outflow-chart-quantity"></canvas>
+  </div>
+  <br><br><br><br><br>
+  <div id="chart-container-outflow">
+    <canvas id="outflow-chart-outflow"></canvas>
+  </div>
+  <br><br><br>
   <p>Прогноз расхода препарата на следующую неделю: <span id="nextWeekOutflowPrediction"></span> штук</p>
   <p>Прогноз расхода препарата на следующий месяц: <span id="nextMonthOutflowPrediction"></span> штук</p>
-  <br><br><br>
-  <div id="chart-container">
-    <canvas id="outflow-chart"></canvas>
-  </div>
 </div>
 
 <div class="button-container">
@@ -52,9 +56,10 @@
 </div>
 
 <script>
-  var myChart;
+  var myChart1;
+  var myChart2;
 
-  function getPredictionData() {
+  function getPredictionData1() {
     var productId = document.getElementById("product-id").value;
     var weeksNumber = document.getElementById("weeks-number").value;
     var xhr = new XMLHttpRequest();
@@ -65,12 +70,12 @@
                 document.getElementById('nextWeekOutflowPrediction').textContent = response.nextWeekOutflowPrediction.toFixed(2);
                 document.getElementById('nextMonthOutflowPrediction').textContent = response.nextMonthOutflowPrediction.toFixed(2);
 
-                if (myChart) {
-                    myChart.destroy();
+                if (myChart1) {
+                    myChart1.destroy();
                 }
 
-                var ctx = document.getElementById('outflow-chart').getContext('2d');
-                myChart = new Chart(ctx, {
+                var ctx = document.getElementById('outflow-chart-outflow').getContext('2d');
+                myChart1 = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: response.labels,
@@ -99,7 +104,7 @@
                     }
                 });
 
-                myChart.update();
+                myChart1.update();
             } else {
                 console.error('Ошибка при выполнении запроса:', xhr.status);
             }
@@ -110,33 +115,100 @@
   }
 
 
+    function getPredictionData2() {
+      var productId = document.getElementById("product-id").value;
+      var weeksNumber = document.getElementById("weeks-number").value;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  var response = JSON.parse(xhr.responseText);
+
+                  if (myChart2) {
+                      myChart2.destroy();
+                  }
+
+                  var ctx = document.getElementById('outflow-chart-quantity').getContext('2d');
+                  myChart2 = new Chart(ctx, {
+                      type: 'line',
+                      data: {
+                          labels: response.labels,
+                          datasets: [{
+                              label: 'Препарата на складе',
+                              data: response.outflowValues,
+                              borderColor: 'rgb(75, 192, 192)',
+                              tension: 0.1,
+                              pointRadius: 3,  // начальный размер точек
+                              pointHoverRadius: 5  // начальный размер точек при наведении
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              y: {
+                                  beginAtZero: true
+                              }
+                          },
+                          plugins: {
+                              title: {
+                                  display: true,
+                                  text: 'График количественного наличия препарата на складе за последние ' + weeksNumber + ' недель',
+                                  position: 'bottom'
+                              }
+                          }
+                      }
+                  });
+
+                  myChart2.update();
+              } else {
+                  console.error('Ошибка при выполнении запроса:', xhr.status);
+              }
+          }
+      };
+      xhr.open('GET', '/report-product/' + productId + '-' + weeksNumber);
+      xhr.send();
+  }
+
+
   document.addEventListener("DOMContentLoaded", function() {
-    getPredictionData();
+    getPredictionData1();
+    getPredictionData2();
   });
 
 
   document.getElementById('product-id').addEventListener('change', function() {
-    getPredictionData();
+    getPredictionData1();
+    getPredictionData2();
   });
 
   document.getElementById('weeks-number').addEventListener('change', function() {
-    getPredictionData();
+    getPredictionData1();
+    getPredictionData2();
   });
 
   function updateChartPoints(showPoints) {
-      if (myChart && myChart.data.datasets) {
-          myChart.data.datasets.forEach(dataset => {
+      if (myChart1 && myChart1.data.datasets) {
+          myChart1.data.datasets.forEach(dataset => {
               dataset.pointRadius = showPoints ? 3 : 0;  // размер точек (0 - точки не отображаются)
               dataset.pointHoverRadius = showPoints ? 5 : 0; // размер точек при наведении (0 - точки не отображаются)
           });
-          myChart.update();
+          myChart1.update();
+      }
+
+      if (myChart2 && myChart2.data.datasets) {
+          myChart2.data.datasets.forEach(dataset => {
+              dataset.pointRadius = showPoints ? 3 : 0;  // размер точек (0 - точки не отображаются)
+              dataset.pointHoverRadius = showPoints ? 5 : 0; // размер точек при наведении (0 - точки не отображаются)
+          });
+          myChart2.update();
       }
   }
 
   document.getElementById('download-pdf').addEventListener('click', function() {
     const { jsPDF } = window.jspdf;
-    const content = document.getElementById('chart-container');
-    const canvas = document.getElementById('outflow-chart');
+    const content1 = document.getElementById('chart-container-outflow');
+    const canvas1 = document.getElementById('outflow-chart-outflow');
+    const content2 = document.getElementById('chart-container-quantity');
+    const canvas2 = document.getElementById('outflow-chart-quantity');
     const nav = document.querySelector('nav');
     const h1 = document.querySelector('h1');
     const homeButton = document.querySelector('.home-button');
@@ -160,13 +232,18 @@
     h1.innerHTML = `Отчётность по аналитике потребностей в препарате "${selectedProduct}"`;
 
     // Увеличиваем график на всю страницу
-    const originalWidth = canvas.style.width;
-    const originalHeight = canvas.style.height;
-    content.style.width = '100%';
-    content.style.height = '100vh';
-    canvas.style.width = '100%';
-    canvas.style.height = '100vh';
-    myChart.resize();
+    const originalWidth = canvas1.style.width + canvas2.style.width;
+    const originalHeight = canvas1.style.height + canvas2.style.height;
+    content1.style.width = '100%';
+    content1.style.height = '100vh';
+    content2.style.width = '100%';
+    content2.style.height = '100vh';
+    canvas1.style.width = '100%';
+    canvas1.style.height = '100vh';
+    canvas2.style.width = '100%';
+    canvas2.style.height = '100vh';
+    myChart1.resize();
+    myChart2.resize();
 
     // Отключаем стили background-color и border
     const addFormElements = document.querySelectorAll('.add-form');
@@ -205,11 +282,16 @@
           form.style.display = '';
 
           // Возвращаем исходные размеры графика
-          content.style.width = '';
-          content.style.height = '';
-          canvas.style.width = originalWidth;
-          canvas.style.height = originalHeight;
-          myChart.resize();
+          content1.style.width = '';
+          content1.style.height = '';
+          content2.style.width = '';
+          content2.style.height = '';
+          canvas1.style.width = originalWidth;
+          canvas1.style.height = originalHeight;
+          canvas2.style.width = originalWidth;
+          canvas2.style.height = originalHeight;
+          myChart1.resize();
+          myChart2.resize();
 
           // Восстанавливаем стили background-color и border
           addFormElements.forEach((element, index) => {
@@ -220,5 +302,6 @@
     }, 1000); // задержка в 1000 мс
   });
 </script>
+
 </body>
 </html>
