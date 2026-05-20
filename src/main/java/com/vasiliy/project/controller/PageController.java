@@ -135,6 +135,11 @@ public class PageController {
     return "written-off";
   }
 
+  @GetMapping("/notifications")
+  public String getNotifications() {
+    return "notifications";
+  }
+
   @GetMapping("/analytics-product")
   public String getAnalyticsProduct(Model model) {
     model.addAttribute("username", authService.getCurrentUserUsername());
